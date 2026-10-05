@@ -1,0 +1,125 @@
+{
+  "nombre": "API de la Vecindad",
+  "version": "1.0",
+  "tipo": "JSON estático para GitHub Pages",
+  "personajes": [
+    { "id": "chavo", "nombre": "EL CHAVO", "foto": "images/chavo.jpg" },
+    { "id": "quico", "nombre": "QUICO", "foto": "images/quico.avif" },
+    { "id": "chilindrina", "nombre": "LA CHILINDRINA", "foto": "images/chilindrina.jpg" },
+    { "id": "don-ramon", "nombre": "DON RAMÓN", "foto": "images/don ramon.jpg" },
+    { "id": "florinda", "nombre": "DOÑA FLORINDA", "foto": "images/doña florinda.jpg" },
+    { "id": "senor-barriga", "nombre": "SEÑOR BARRIGA", "foto": "images/señor barriga.webp" }
+  ],
+  "historias": {
+    "chavo": [
+      {
+        "student": "Don Ramón, vi un gato con un solo ojo.",
+        "teacher": "¿Cómo que viste un gato con un solo ojo, chavito?",
+        "twist": "Porque me tapé el otro.",
+        "labels": ["EL CHAVO", "DON RAMÓN"],
+        "faces": ["😋", "😮", "🐈"],
+        "sfx": ["MIRA", "¿CHAVITO?", "MIAU"],
+        "twistPhotos": ["images/chavo.jpg", "images/don ramon.jpg"]
+      }
+    ],
+    "quico": [
+      {
+        "student": "Mi pelota es tan exclusiva que solo rebota con invitados.",
+        "teacher": "¿Entonces por qué no rebota?",
+        "twist": "Olvidó mandar las invitaciones.",
+        "labels": ["QUICO", "EL CHAVO"],
+        "faces": ["⚽", "🤔", "💌"],
+        "sfx": ["", "", "¡UPS!"],
+        "photos": ["images/quico.avif", "images/chavo1.avif"],
+        "twistPhotos": ["images/quico.avif", "images/chavo1.avif"]
+      }
+    ],
+    "chilindrina": [
+      {
+        "student": "Puse un letrero de 'piso mojado' y nadie lo leyó.",
+        "teacher": "¿Y dónde está el agua?",
+        "twist": "No hay. Era una prueba de lectura.",
+        "labels": ["LA CHILINDRINA", "DON RAMÓN"],
+        "faces": ["😇", "😑", "📋"],
+        "sfx": ["¡SORPRESA!", "¿DÓNDE?", "JA-JA"],
+        "twistPhotos": ["images/chilindrina.jpg", "images/don ramon.jpg"]
+      },
+      {
+        "student": "Escondí el silbato para que el patio estuviera en paz.",
+        "teacher": "¿Y por qué se escucha un silbato?",
+        "twist": "Lo escondí dentro de mi bolsillo.",
+        "labels": ["LA CHILINDRINA", "EL CHAVO"],
+        "faces": ["🤫", "👂", "📣"],
+        "sfx": ["SHHH", "¿QUÉ FUE?", "¡FUI YO!"],
+        "twistPhotos": ["images/chilindrina.jpg", "images/chavo.jpg"]
+      },
+      {
+        "student": "Doña Florinda, le preparé un té para que se relaje.",
+        "teacher": "¿Y por qué hace tanta espuma?",
+        "twist": "La Chilindrina lo confundió con jabón para lavar.",
+        "labels": ["LA CHILINDRINA", "DOÑA FLORINDA"],
+        "faces": ["🍵", "😠", "🫧"],
+        "sfx": ["¡TÉ CALIENTE!", "¿ESPUMA?", "¡GLUP!"],
+        "twistPhotos": ["images/chilindrina.jpg", "images/doña florinda.jpg"]
+      }
+    ],
+    "don-ramon": [
+      {
+        "student": "Señor Barriga, hoy sí traigo el dinero de la renta.",
+        "teacher": "Qué milagro. ¿Y dónde está?",
+        "twist": "En camino. Viene caminando desde el mes pasado.",
+        "labels": ["DON RAMÓN", "SEÑOR BARRIGA"],
+        "faces": ["😅", "😤", "🚶"],
+        "sfx": ["EJEM", "¿Y BIEN?", "TIC TAC"],
+        "twistPhotos": ["images/don ramon.jpg", "images/señor barriga.webp"]
+      },
+      {
+        "student": "Puedo pagarle con una clase de jardinería.",
+        "teacher": "¿Sabe cuidar plantas?",
+        "twist": "Claro. Les habla bonito cuando se marchitan.",
+        "labels": ["DON RAMÓN", "DOÑA FLORINDA"],
+        "faces": ["🪴", "🤨", "🌱"],
+        "sfx": ["PROPONGO", "A VER", "¡CRECE!"],
+        "twistPhotos": ["images/don ramon.jpg", "images/doña florinda.jpg"]
+      },
+      {
+        "student": "Traigo una moneda para empezar a pagar.",
+        "teacher": "¿Y el resto?",
+        "twist": "El resto está reuniendo valor para venir.",
+        "labels": ["DON RAMÓN", "DOÑA FLORINDA"],
+        "faces": ["🪙", "😑", "💸"],
+        "sfx": ["¡TIN!", "¿ESO ES TODO?", "EN PROCESO"],
+        "twistPhotos": ["images/don ramon.jpg", "images/doña florinda.jpg"]
+      }
+    ],
+    "florinda": [
+      {
+        "student": "Preparé la merienda. Traigan platos y una buena explicación.",
+        "teacher": "¿Una explicación para qué?",
+        "twist": "Alguien probó todo antes de servirlo.",
+        "labels": ["DOÑA FLORINDA", "QUICO"],
+        "faces": ["🫖", "😇", "🍪"],
+        "sfx": ["¡A MERENDAR!", "YO NO FUI", "ÑAM"],
+        "twistPhotos": ["images/doña florinda.jpg", "images/quico.avif"]
+      },
+      {
+        "student": "El café está listo y la cucharita también.",
+        "teacher": "¿Y dónde está la taza?",
+        "twist": "Quico la eligió para su colección de trofeos.",
+        "labels": ["DOÑA FLORINDA", "DON RAMÓN"],
+        "faces": ["☕", "🤷", "🏆"],
+        "sfx": ["FRESQUITO", "NI IDEA", "¡BRILLO!"],
+        "twistPhotos": ["images/doña florinda.jpg", "images/don ramon.jpg"]
+      },
+      {
+        "student": "Hice galletas para todos. Hay una por persona.",
+        "teacher": "¿Y por qué queda solo una?",
+        "twist": "La persona que contó las galletas tenía mucha hambre.",
+        "labels": ["DOÑA FLORINDA", "EL CHAVO"],
+        "faces": ["🍪", "😳", "😋"],
+        "sfx": ["¡RECIÉN HECHAS!", "QUÉ RARO", "CRUNCH"],
+        "twistPhotos": ["images/doña florinda.jpg", "images/chavo.jpg"]
+      }
+    ]
+  }
+}
