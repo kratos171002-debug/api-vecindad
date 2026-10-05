@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff6dc">
+  <title>La API de la Vecindad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="topline">
+      <a class="wordmark" href="#inicio" aria-label="API de la Vecindad, inicio">
+        <span class="wordmark-icon" aria-hidden="true">✏️</span>
+        <span>API DE LA VECINDAD</span>
+      </a>
+      <span class="edition"><span class="live-dot"></span> <span id="api-status">Conectando API...</span></span>
+    </header>
+
+    <section class="intro" id="inicio" aria-labelledby="page-title">
+      <div class="intro-copy">
+        <p class="eyebrow">EL GENERADOR DE ENREDOS VECINALES</p>
+        <h1 id="page-title">¡Qué pasó en<br><span>la vecindad!</span></h1>
+        <p class="intro-text">Elige al protagonista y mira cómo un problemita cotidiano se convierte en un caso de tres viñetas.</p>
+      </div>
+      <figure class="cover-art">
+        <img src="images/elenco.jpg" alt="Portada ilustrada de El Chavo Animado con los personajes de la vecindad">
+        <figcaption>¡Pásale a la vecindad!</figcaption>
+      </figure>
+    </section>
+
+    <section class="generator" aria-labelledby="generator-title">
+      <div class="generator-heading">
+        <span class="step-number">01</span>
+        <div>
+          <h2 id="generator-title">¿Quién armó el enredo?</h2>
+          <p>Elige un personaje para abrir el expediente.</p>
+        </div>
+      </div>
+      <div class="controls">
+        <label class="select-wrap" for="situation">
+          <span class="sr-only">Personaje de la vecindad</span>
+          <select id="situation">
+            <option value="chavo">Adivinanza de El Chavo</option>
+            <option value="quico">Quico y la pelota</option>
+            <option value="chilindrina">La Chilindrina prepara una broma</option>
+            <option value="don-ramon">Don Ramón y el día de la renta</option>
+            <option value="florinda">Doña Florinda organiza la merienda</option>
+          </select>
+          <span class="select-arrow" aria-hidden="true">⌄</span>
+        </label>
+        <button class="generate-button" id="generate" type="button" disabled>
+          <span aria-hidden="true">⚡</span> ¡Armar el enredo!
+        </button>
+      </div>
+    </section>
+
+    <figure class="classroom-scene">
+      <img src="images/chavo animado.jpg" alt="El Chavo y sus compañeros en una clase alegre">
+      <figcaption><span>ESCENA DEL SALÓN</span><span>La clase ya empezó... más o menos.</span></figcaption>
+    </figure>
+
+    <section class="comic-area" aria-live="polite" aria-atomic="true">
+      <div class="comic-topline">
+        <div>
+          <span class="step-number step-number-coral">02</span>
+          <h2>Expediente <span id="case-number">#001</span></h2>
+        </div>
+        <span class="case-stamp"><span aria-hidden="true">●</span> CASO ABIERTO</span>
+      </div>
+
+      <div class="comic-strip" id="comic-strip">
+        <article class="comic-panel panel-student with-character-photo">
+          <img class="character-art" src="images/chavo.jpg" alt="">
+          <span class="panel-label" id="first-label">EL CHAVO</span>
+          <div class="speech-bubble" id="student-line">Don Ramón, vi un gato con un solo ojo.</div>
+          <div class="character student-character" id="student-face" aria-hidden="true">😋</div>
+          <span class="panel-sfx" id="student-sfx">GRRR</span>
+        </article>
+        <article class="comic-panel panel-professor with-character-photo">
+          <img class="character-art" src="images/don ramon.jpg" alt="">
+          <span class="panel-label" id="second-label">DON RAMÓN</span>
+          <div class="speech-bubble" id="teacher-line">¿Cómo que viste un gato con un solo ojo, chavito?</div>
+          <div class="character professor-character" id="teacher-face" aria-hidden="true">😮</div>
+          <span class="panel-sfx" id="teacher-sfx">¿AH, SÍ?</span>
+        </article>
+        <article class="comic-panel panel-twist with-twist-photos">
+          <img class="twist-photo twist-photo-first" src="images/chavo.jpg" alt="">
+          <img class="twist-photo twist-photo-second" src="images/don ramon.jpg" alt="">
+          <span class="panel-label">EL GIRO INESPERADO</span>
+          <div class="speech-bubble" id="twist-line">Porque me tapé el otro.</div>
+          <div class="character twist-character" id="twist-face" aria-hidden="true">🐈</div>
+          <span class="panel-sfx" id="twist-sfx">MIAU</span>
+        </article>
+      </div>
+      <div class="comic-footer">
+        <p><span aria-hidden="true">🏠</span> Enredos originales, inspirados en el humor de vecindad.</p>
+        <button class="reroll-button" id="reroll" type="button" title="Generar otra versión" aria-label="Generar otra versión" disabled>↻</button>
+      </div>
+    </section>
+
+    <section class="mini-game" aria-labelledby="game-title">
+      <div class="generator-heading">
+        <span class="step-number step-number-coral">03</span>
+        <div>
+          <h2 id="game-title">¡Atrapa las tortas!</h2>
+          <p>El Chavo tiene hambre otra vez.</p>
+        </div>
+      </div>
+      <div class="game-toolbar">
+        <div class="game-stat game-score-stat">
+          <span>RESCATADAS</span>
+          <strong id="game-score">0</strong>
+        </div>
+        <div class="game-stat game-time-stat">
+          <span>TIEMPO</span>
+          <strong><span id="game-time">15</span>s</strong>
+        </div>
+        <button class="generate-button game-start" id="game-start" type="button">¡Empezar!</button>
+      </div>
+      <div class="game-arena" id="game-arena" role="group" aria-label="Juego de atrapar tortas">
+        <p class="game-message" id="game-message" aria-live="polite">¡Se escapó una torta!</p>
+        <div class="game-cast" aria-hidden="true">
+          <img src="images/chavo.jpg" alt="">
+          <img src="images/quico.avif" alt="">
+          <img src="images/chilindrina.jpg" alt="">
+        </div>
+        <button class="snack-target" id="snack-target" type="button" aria-label="Atrapar torta" hidden>🥪</button>
+      </div>
+    </section>
+
+    <section class="mystery-game" aria-labelledby="mystery-title">
+      <div class="generator-heading">
+        <span class="step-number">04</span>
+        <div>
+          <h2 id="mystery-title">¿Quién fue?</h2>
+          <p>Un caso nuevo en cada pista.</p>
+        </div>
+      </div>
+      <div class="mystery-meta">
+        <span class="mystery-round" id="mystery-round">CASO 1 DE 3</span>
+        <span class="mystery-score">PUNTOS <strong id="mystery-score">0</strong></span>
+      </div>
+      <p class="mystery-clue" id="mystery-clue"></p>
+      <div class="mystery-choices" id="mystery-choices"></div>
+      <p class="mystery-feedback" id="mystery-feedback" aria-live="polite"></p>
+      <button class="generate-button mystery-next" id="mystery-next" type="button" hidden></button>
+    </section>
+
+    <section class="duel-game" aria-labelledby="duel-title">
+      <div class="generator-heading">
+        <span class="step-number step-number-coral">05</span>
+        <div>
+          <h2 id="duel-title">Duelo de reflejos</h2>
+          <p>Toca al personaje que aparece antes de que cambie.</p>
+        </div>
+      </div>
+      <div class="game-toolbar">
+        <div class="game-stat game-score-stat">
+          <span>ACERTADOS</span>
+          <strong id="duel-score">0</strong>
+        </div>
+        <div class="game-stat game-time-stat">
+          <span>TIEMPO</span>
+          <strong><span id="duel-time">15</span>s</strong>
+        </div>
+        <button class="generate-button game-start" id="duel-start" type="button">¡Empezar!</button>
+      </div>
+      <div class="duel-arena" aria-live="polite">
+        <p class="duel-message" id="duel-message">¿Quién salió?</p>
+        <div class="duel-target" id="duel-target">
+          <img id="duel-target-image" src="images/chavo.jpg" alt="">
+          <strong id="duel-target-name">EL CHAVO</strong>
+        </div>
+      </div>
+      <div class="duel-choices" role="group" aria-label="Elige el personaje que aparece">
+        <button class="duel-choice" type="button" data-character="EL CHAVO" disabled>
+          <img src="images/chavo.jpg" alt="">
+          <span>EL CHAVO</span>
+        </button>
+        <button class="duel-choice" type="button" data-character="QUICO" disabled>
+          <img src="images/quico.avif" alt="">
+          <span>QUICO</span>
+        </button>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <span>ARCHIVO DE ENREDOS VECINALES</span>
+      <span>HUMOR ORIGINAL · <a href="api.json" target="_blank" rel="noreferrer">VER API JSON</a></span>
+    </footer>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+</body>
+</html>
