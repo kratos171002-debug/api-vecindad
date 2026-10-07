@@ -1,8 +1,40 @@
 $(function () {
-  let cases = {};
+  window.appApiData = null;
 
-  let caseNumber = 1;
-  let previousIndex = -1;
+  async function loadApiData() {
+    const service = window.ApiDataService.createDataService({
+      endpoint: "/api/api.json",
+      fallback: "/api/data.json",
+      fetcher: typeof fetch === "function" ? fetch.bind(globalThis) : null,
+      fallbackFetcher: typeof fetch === "function" ? fetch.bind(globalThis) : null
+    });
+
+    try {
+      const result = await service.load();
+      window.appApiData = result.data;
+
+      if (result.source === "online") {
+        $("#api-status").text("API JSON conectada");
+        console.info("API JSON conectada");
+        $(".live-dot").removeClass("is-offline");
+      } else {
+        $("#api-status").text("Modo offline · datos locales");
+        console.info("Modo offline · datos locales");
+        $(".live-dot").addClass("is-offline");
+      }
+    } catch (error) {
+      $("#api-status").text("Error API");
+      $(".live-dot").addClass("is-offline");
+      console.error("Error API", error);
+    }
+  }
+
+  loadApiData();
+
+  $("#enter-vecindad").on("click", function () {
+    $("body").removeClass("is-landing");
+  });
+
   const characterPhotos = {
     "EL CHAVO": "images/chavo.jpg",
     "QUICO": "images/quico.avif",
@@ -12,82 +44,156 @@ $(function () {
     "SEÑOR BARRIGA": "images/señor barriga.webp"
   };
 
-  function setFace(selector, emoji, characterName, specificPhoto) {
-    const $face = $(selector).empty();
-    const $panel = $face.closest(".comic-panel");
-    const photo = specificPhoto || characterPhotos[characterName];
-    $panel.children(".character-art").remove();
-    if (photo) {
-      $panel.addClass("with-character-photo").prepend($("<img>", { class: "character-art", src: photo, alt: "" }));
-      $face.text(emoji);
-    } else {
-      $panel.removeClass("with-character-photo");
-      $face.text(emoji);
+  function showView(panelId) {
+    $(".view-tab").removeClass("is-active").attr("aria-selected", "false");
+
+    const $targetTab = $("#tab-" + panelId.replace("-view", ""));
+    if ($targetTab.length) {
+      $targetTab.addClass("is-active").attr("aria-selected", "true");
     }
+
+    $(".view-panel").prop("hidden", true);
+    $("#" + panelId).prop("hidden", false);
   }
 
-  function setTwistPhotos(photos) {
-    const $panel = $("#twist-face").closest(".comic-panel");
-    $panel.children(".twist-photo").remove();
-    $panel.toggleClass("with-twist-photos", Boolean(photos));
-    if (photos) {
-      photos.forEach(function (source, index) {
-        const photoClass = photos.length === 1 ? "twist-photo-single" : index === 0 ? "twist-photo-first" : "twist-photo-second";
-        $panel.prepend($("<img>", { class: "twist-photo " + photoClass, src: source, alt: "" }));
-      });
+  $(".view-tab").on("click", function () {
+    showView($(this).attr("aria-controls"));
+  });
+
+  $(".quick-link").on("click", function () {
+    showView($(this).data("viewTarget"));
+    document.querySelector("#" + $(this).data("viewTarget")).scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  const jokeQuestions = [
+    {
+      question: "¿Por qué el Chavo lleva una escalera al patio?",
+      correctIndex: 1,
+      answerText: "Para llegar a la altura de la situación",
+      options: ["Para probar la gravedad", "Para llegar a la altura de la situación", "Para esconder una pelota"]
+    },
+    {
+      question: "¿Qué hace el Quico cuando se queda sin pelota?",
+      correctIndex: 0,
+      answerText: "Busca una pelota nueva",
+      options: ["Busca una pelota nueva", "Hace una canción", "Pide ayuda al gato"]
+    },
+    {
+      question: "¿Por qué la Chilindrina guarda un reloj en la boca?",
+      correctIndex: 0,
+      answerText: "Para saber cuándo decir 'ya llego'",
+      options: ["Para saber cuándo decir 'ya llego'", "Para contar los segundos", "Para escuchar el patio"]
     }
-  }
+  ];
+  let jokeIndex = 0;
+  let jokeScore = 0;
+  let jokeAnswered = false;
+  let jokeFinished = false;
 
-  function generateComic() {
-    const situation = $("#situation").val();
-    const options = cases[situation];
-    if (!options || options.length === 0) return;
-    let index = Math.floor(Math.random() * options.length);
-    if (options.length > 1 && index === previousIndex) index = (index + 1) % options.length;
-    previousIndex = index;
-    const comic = options[index];
+  function showJoke() {
+    const currentJoke = jokeQuestions[jokeIndex];
+    jokeAnswered = false;
+    jokeFinished = false;
+    $("#joke-number").text("CHISTE " + (jokeIndex + 1));
+    $("#joke-question").text(currentJoke.question);
+    $("#joke-score").text(jokeScore + " / 3");
+    $("#joke-feedback").text("");
+    $("#joke-next").prop("hidden", true);
 
-    $("#first-label").text(comic.labels[0]);
-    $("#second-label").text(comic.labels[1]);
-    $("#student-line").text(comic.student);
-    $("#teacher-line").text(comic.teacher);
-    $("#twist-line").text(comic.twist);
-    setFace("#student-face", comic.faces[0], comic.labels[0], comic.photos && comic.photos[0]);
-    setFace("#teacher-face", comic.faces[1], comic.labels[1], comic.photos && comic.photos[1]);
-    setTwistPhotos(comic.twistPhotos);
-    $("#twist-face").text(comic.faces[2]);
-    $("#student-sfx").text(comic.sfx[0]);
-    $("#teacher-sfx").text(comic.sfx[1]);
-    $("#twist-sfx").text(comic.sfx[2]);
-
-    caseNumber = caseNumber === 999 ? 1 : caseNumber + 1;
-    $("#case-number").text("#" + String(caseNumber).padStart(3, "0"));
-    $(".character").removeClass("pop");
-    window.setTimeout(function () {
-      $(".character").css("animation", "none");
-      void document.querySelector(".character").offsetWidth;
-      $(".character").css("animation", "");
-    }, 0);
-  }
-
-  $("#generate, #reroll").on("click", generateComic);
-  setFace("#student-face", "😋", "EL CHAVO");
-  setFace("#teacher-face", "😮", "DON RAMÓN");
-  setTwistPhotos(["images/chavo.jpg", "images/don ramon.jpg"]);
-
-  $.getJSON("api.json")
-    .done(function (response) {
-      if (!response.historias) {
-        $("#api-status").text("Error en el JSON");
-        return;
-      }
-      cases = response.historias;
-      $("#api-status").text("API JSON conectada");
-      $("#generate, #reroll").prop("disabled", false);
-    })
-    .fail(function () {
-      $("#api-status").text("No se pudo cargar api.json");
+    const $options = $("#joke-options").empty();
+    currentJoke.options.forEach(function (option, index) {
+      $("<button>", {
+        class: "joke-option",
+        type: "button",
+        "data-answer": String(index === currentJoke.correctIndex),
+        text: option
+      }).appendTo($options);
     });
+  }
+
+  $("#joke-options").on("click", ".joke-option", function () {
+    if (jokeAnswered || jokeIndex >= jokeQuestions.length) return;
+    jokeAnswered = true;
+    const selectedIndex = $(this).index();
+    const currentJoke = jokeQuestions[jokeIndex];
+    const isCorrect = $(this).data("answer") === true;
+
+    $("#joke-options .joke-option").prop("disabled", true).each(function () {
+      const buttonIndex = $(this).index();
+      $(this).toggleClass("is-correct", buttonIndex === currentJoke.correctIndex);
+      $(this).toggleClass("is-wrong", buttonIndex === selectedIndex && !isCorrect);
+    });
+
+    if (isCorrect) jokeScore += 1;
+    $("#joke-score").text(jokeScore + " / 3");
+    $("#joke-feedback").text(isCorrect ? "¡Correcto! El chiste quedó limpio." : "No. La respuesta era: " + currentJoke.answerText);
+    $("#joke-next").text(jokeIndex === jokeQuestions.length - 1 ? "Ver resultados" : "Chiste siguiente").prop("hidden", false);
+  });
+
+  $("#joke-next").on("click", function () {
+    if (jokeFinished) {
+      jokeIndex = 0;
+      jokeScore = 0;
+      showJoke();
+      return;
+    }
+
+    if (jokeIndex >= jokeQuestions.length - 1) {
+      jokeFinished = true;
+      $("#joke-number").text("RESULTADO");
+      $("#joke-question").text(jokeScore === jokeQuestions.length ? "¡Tres chistes correctos! La vecindad quedó sorprendida." : "¡Buen intento! El chiste también se ríe de uno.");
+      $("#joke-options").empty();
+      $("#joke-feedback").text("Puntaje final: " + jokeScore + " de 3.");
+      $("#joke-next").text("Jugar otra vez").prop("hidden", false);
+      return;
+    }
+
+    jokeIndex += 1;
+    showJoke();
+  });
+
+  $("#exit-to-main").on("click", function () {
+    $("body").addClass("is-landing");
+    $(".view-panel").prop("hidden", true);
+    $("#tab-comic").addClass("is-active").attr("aria-selected", "true");
+    $("#tab-games, #tab-thanks").removeClass("is-active").attr("aria-selected", "false");
+    $("#comic-view").prop("hidden", false);
+  });
+
+  function toggleThankYouModal(forceOpen) {
+    const $modal = $("#thank-you-modal");
+    const shouldOpen = typeof forceOpen === "boolean" ? forceOpen : $modal.prop("hidden");
+    $modal.prop("hidden", !shouldOpen).attr("aria-hidden", String(!shouldOpen));
+  }
+
+  $("#open-thank-you-image").on("click", function () {
+    toggleThankYouModal(true);
+  });
+
+  $("#close-thank-you-image, [data-close='true']").on("click", function () {
+    toggleThankYouModal(false);
+  });
+
+  $(document).on("keydown", function (event) {
+    if (event.key === "Escape") toggleThankYouModal(false);
+  });
+
+  function showGamePanel(panelId) {
+    $(".game-tab").removeClass("is-active").attr("aria-selected", "false");
+    $(".mini-game-link").removeClass("is-active");
+    $(".game-panel").prop("hidden", true);
+    $("#" + panelId).prop("hidden", false);
+    $("#tab-" + panelId.replace("-panel", "") + "-game").addClass("is-active").attr("aria-selected", "true");
+    $(".mini-game-link[data-game-panel='" + panelId + "']").addClass("is-active");
+  }
+
+  $(".game-tab").on("click", function () {
+    showGamePanel($(this).attr("aria-controls"));
+  });
+
+  $(".mini-game-link").on("click", function () {
+    showGamePanel($(this).data("gamePanel"));
+  });
 
   let gameScore = 0;
   let gameTime = 15;

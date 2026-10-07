@@ -10,13 +10,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="is-landing">
+  <div class="landing-screen" id="landing-screen" role="dialog" aria-modal="true" aria-labelledby="landing-title">
+    <div class="landing-card" aria-labelledby="landing-title">
+      <button class="door-button" id="enter-vecindad" type="button" aria-label="Entrar a la vecindad del Chavo">
+        <span class="door-panel"></span>
+        <span class="door-label">Entrar</span>
+        <span class="door-knob" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
   <main class="page-shell">
     <header class="topline">
       <a class="wordmark" href="#inicio" aria-label="API de la Vecindad, inicio">
         <span class="wordmark-icon" aria-hidden="true">✏️</span>
         <span>API DE LA VECINDAD</span>
       </a>
+      <nav class="quick-nav" aria-label="Accesos rápidos">
+        <button class="quick-link" type="button" data-view-target="comic-view">Comiquitas</button>
+        <button class="quick-link" type="button" data-view-target="games-view">Juegos</button>
+        <button class="quick-link" type="button" data-view-target="thanks-view">Gracias</button>
+      </nav>
       <span class="edition"><span class="live-dot"></span> <span id="api-status">Conectando API...</span></span>
     </header>
 
@@ -32,76 +47,64 @@
       </figure>
     </section>
 
-    <section class="generator" aria-labelledby="generator-title">
-      <div class="generator-heading">
-        <span class="step-number">01</span>
-        <div>
-          <h2 id="generator-title">¿Quién armó el enredo?</h2>
-          <p>Elige un personaje para abrir el expediente.</p>
-        </div>
-      </div>
-      <div class="controls">
-        <label class="select-wrap" for="situation">
-          <span class="sr-only">Personaje de la vecindad</span>
-          <select id="situation">
-            <option value="chavo">Adivinanza de El Chavo</option>
-            <option value="quico">Quico y la pelota</option>
-            <option value="chilindrina">La Chilindrina prepara una broma</option>
-            <option value="don-ramon">Don Ramón y el día de la renta</option>
-            <option value="florinda">Doña Florinda organiza la merienda</option>
-          </select>
-          <span class="select-arrow" aria-hidden="true">⌄</span>
-        </label>
-        <button class="generate-button" id="generate" type="button" disabled>
-          <span aria-hidden="true">⚡</span> ¡Armar el enredo!
-        </button>
-      </div>
-    </section>
+    <div class="view-tabs" role="tablist" aria-label="Secciones de la página">
+      <button class="view-tab is-active" id="tab-comic" type="button" role="tab" aria-selected="true" aria-controls="comic-view">Comiquitas</button>
+      <button class="view-tab" id="tab-games" type="button" role="tab" aria-selected="false" aria-controls="games-view">Minijuegos</button>
+      <button class="view-tab" id="tab-thanks" type="button" role="tab" aria-selected="false" aria-controls="thanks-view">Para la profe Sabrina</button>
+    </div>
 
+    <section class="view-panel" id="comic-view" role="tabpanel" aria-labelledby="tab-comic">
     <figure class="classroom-scene">
       <img src="images/chavo animado.jpg" alt="El Chavo y sus compañeros en una clase alegre">
       <figcaption><span>ESCENA DEL SALÓN</span><span>La clase ya empezó... más o menos.</span></figcaption>
     </figure>
 
-    <section class="comic-area" aria-live="polite" aria-atomic="true">
-      <div class="comic-topline">
+    <section class="joke-game" id="joke-game" aria-labelledby="joke-title">
+      <div class="joke-heading">
+        <span class="step-number step-number-coral">01</span>
         <div>
-          <span class="step-number step-number-coral">02</span>
-          <h2>Expediente <span id="case-number">#001</span></h2>
+          <p class="joke-kicker">JUEGO DE CHISTE</p>
+          <h2 id="joke-title">¿Quién dice el chiste?</h2>
+          <p>Elige la respuesta correcta y consigue una sonrisa vecinal.</p>
         </div>
-        <span class="case-stamp"><span aria-hidden="true">●</span> CASO ABIERTO</span>
       </div>
 
-      <div class="comic-strip" id="comic-strip">
-        <article class="comic-panel panel-student with-character-photo">
-          <img class="character-art" src="images/chavo.jpg" alt="">
-          <span class="panel-label" id="first-label">EL CHAVO</span>
-          <div class="speech-bubble" id="student-line">Don Ramón, vi un gato con un solo ojo.</div>
-          <div class="character student-character" id="student-face" aria-hidden="true">😋</div>
-          <span class="panel-sfx" id="student-sfx">GRRR</span>
-        </article>
-        <article class="comic-panel panel-professor with-character-photo">
-          <img class="character-art" src="images/don ramon.jpg" alt="">
-          <span class="panel-label" id="second-label">DON RAMÓN</span>
-          <div class="speech-bubble" id="teacher-line">¿Cómo que viste un gato con un solo ojo, chavito?</div>
-          <div class="character professor-character" id="teacher-face" aria-hidden="true">😮</div>
-          <span class="panel-sfx" id="teacher-sfx">¿AH, SÍ?</span>
-        </article>
-        <article class="comic-panel panel-twist with-twist-photos">
-          <img class="twist-photo twist-photo-first" src="images/chavo.jpg" alt="">
-          <img class="twist-photo twist-photo-second" src="images/don ramon.jpg" alt="">
-          <span class="panel-label">EL GIRO INESPERADO</span>
-          <div class="speech-bubble" id="twist-line">Porque me tapé el otro.</div>
-          <div class="character twist-character" id="twist-face" aria-hidden="true">🐈</div>
-          <span class="panel-sfx" id="twist-sfx">MIAU</span>
-        </article>
+      <div class="joke-scoreboard">
+        <span>CHISTES ACERTADOS</span>
+        <strong id="joke-score">0 / 3</strong>
       </div>
-      <div class="comic-footer">
-        <p><span aria-hidden="true">🏠</span> Enredos originales, inspirados en el humor de vecindad.</p>
-        <button class="reroll-button" id="reroll" type="button" title="Generar otra versión" aria-label="Generar otra versión" disabled>↻</button>
+
+      <div class="joke-question" aria-live="polite">
+        <span class="joke-number" id="joke-number">CHISTE 1</span>
+        <p id="joke-question">¿Por qué el Chavo lleva una escalera al patio?</p>
       </div>
+
+      <div class="joke-options" id="joke-options" role="group" aria-label="Elige una respuesta">
+        <button class="joke-option" type="button" data-answer="false">Para probar la gravedad</button>
+        <button class="joke-option" type="button" data-answer="true">Para llegar a la altura de la situación</button>
+        <button class="joke-option" type="button" data-answer="false">Para esconder una pelota</button>
+      </div>
+
+      <p class="joke-feedback" id="joke-feedback" aria-live="polite"></p>
+      <button class="generate-button joke-next" id="joke-next" type="button" hidden>Chiste siguiente</button>
     </section>
 
+    </section>
+
+    <section class="view-panel" id="games-view" role="tabpanel" aria-labelledby="tab-games" hidden>
+      <nav class="mini-game-menu" aria-label="Minijuegos disponibles">
+        <button class="mini-game-link is-active" type="button" data-game-panel="snack-game-panel">Atrapa tortas</button>
+        <button class="mini-game-link" type="button" data-game-panel="mystery-game-panel">¿Quién fue?</button>
+        <button class="mini-game-link" type="button" data-game-panel="duel-game-panel">Duelo</button>
+      </nav>
+
+      <div class="game-tabs" role="tablist" aria-label="Elige un minijuego">
+        <button class="game-tab is-active" id="tab-snack-game" type="button" role="tab" aria-selected="true" aria-controls="snack-game-panel">Atrapa tortas</button>
+        <button class="game-tab" id="tab-mystery-game" type="button" role="tab" aria-selected="false" aria-controls="mystery-game-panel">¿Quién fue?</button>
+        <button class="game-tab" id="tab-duel-game" type="button" role="tab" aria-selected="false" aria-controls="duel-game-panel">Duelo</button>
+      </div>
+
+      <div class="game-panel" id="snack-game-panel" role="tabpanel" aria-labelledby="tab-snack-game">
     <section class="mini-game" aria-labelledby="game-title">
       <div class="generator-heading">
         <span class="step-number step-number-coral">03</span>
@@ -132,6 +135,9 @@
       </div>
     </section>
 
+      </div>
+
+      <div class="game-panel" id="mystery-game-panel" role="tabpanel" aria-labelledby="tab-mystery-game" hidden>
     <section class="mystery-game" aria-labelledby="mystery-title">
       <div class="generator-heading">
         <span class="step-number">04</span>
@@ -150,6 +156,9 @@
       <button class="generate-button mystery-next" id="mystery-next" type="button" hidden></button>
     </section>
 
+      </div>
+
+      <div class="game-panel" id="duel-game-panel" role="tabpanel" aria-labelledby="tab-duel-game" hidden>
     <section class="duel-game" aria-labelledby="duel-title">
       <div class="generator-heading">
         <span class="step-number step-number-coral">05</span>
@@ -187,6 +196,33 @@
         </button>
       </div>
     </section>
+      </div>
+    </section>
+
+    <section class="view-panel thanks-panel" id="thanks-view" role="tabpanel" aria-labelledby="tab-thanks" hidden>
+      <div class="thanks-actions">
+        <button class="exit-door" id="exit-to-main" type="button" aria-label="Volver al menú principal">
+          <span class="exit-door-panel"></span>
+          <span class="exit-door-label">Exit</span>
+        </button>
+      </div>
+      <div class="thank-you-layout">
+        <div class="thank-you-media">
+          <p class="thank-you-note-text">La profe Sabrina nos pondrá la nota sobre la nota? Bueno lo sabremos en la próxima clase 😆</p>
+          <figure class="thank-you-note">
+            <img src="images/Gracias, profe, por la linda vecindad.png" alt="Gracias, profe Sabrina, por tener el tiempo de ver esta linda vecindad. Proyecto de Antony Rojas y Freiderth Alvarado." loading="lazy" decoding="async">
+          </figure>
+        </div>
+        <button class="thank-you-cta" id="open-thank-you-image" type="button">Pulse aquí</button>
+      </div>
+      <div class="thank-you-modal" id="thank-you-modal" hidden aria-hidden="true">
+        <div class="thank-you-modal__backdrop" data-close="true"></div>
+        <div class="thank-you-modal__content" role="dialog" aria-modal="true" aria-label="Imagen grande de agradecimiento">
+          <button class="thank-you-modal__close" id="close-thank-you-image" type="button" aria-label="Cerrar vista grande">×</button>
+          <img src="images/El Chavo y la Profe Sabrina.png" alt="El Chavo y la profe Sabrina" loading="eager" decoding="async">
+        </div>
+      </div>
+    </section>
 
     <footer class="page-footer">
       <span>ARCHIVO DE ENREDOS VECINALES</span>
@@ -194,7 +230,8 @@
     </footer>
   </main>
 
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="vendor/jquery.min.js"></script>
+  <script src="data-service.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
