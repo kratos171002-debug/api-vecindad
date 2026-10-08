@@ -3,8 +3,8 @@ $(function () {
 
   async function loadApiData() {
     const service = window.ApiDataService.createDataService({
-      endpoint: "/api/api.json",
-      fallback: "/api/data.json",
+      endpoint: "https://api-vecindad-1.onrender.com/api.json",
+      fallback: "https://api-vecindad-1.onrender.com/data.json",
       fetcher: typeof fetch === "function" ? fetch.bind(globalThis) : null,
       fallbackFetcher: typeof fetch === "function" ? fetch.bind(globalThis) : null
     });
